@@ -23,20 +23,17 @@ var con = mysql.createConnection({
 router.use(cors());
 
 router.get('/', function (req, res) {
-    con.connect(function(err) {
-        if (err) throw err;
         con.query("SELECT * FROM customers", function (err, result, fields) {
-          if (err) throw err;
-          console.log(result);
-          res.status(200).json({ result });
+            if (err) throw err;
+            console.log(result);
+            return res.status(200).json(result);
         });
-      });
 });
 
 router.get('/:id', function (req, res) {
     let found = data.find(function (item) {
         return item.id === parseInt(req.params.id);
-    });    if (found) {
+    }); if (found) {
         res.status(200).json(found);
     } else {
         res.sendStatus(404);
